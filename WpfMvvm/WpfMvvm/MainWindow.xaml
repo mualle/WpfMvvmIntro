@@ -4,9 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfMvvm"
+        
+        xmlns:ribbon="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" 
+        
         mc:Ignorable="d" WindowState="Normal" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" Icon="appbar.box.layered.png"
         Title="Employee Master File" Height="600" Width="800" >
-    <Grid>
-       
+
+    <Grid Name="MainLayoutGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ribbon:Ribbon Grid.Row="0" >
+
+        </ribbon:Ribbon>
+
+        <StatusBar Grid.Row="2" Height="27"></StatusBar>
     </Grid>
 </Window>

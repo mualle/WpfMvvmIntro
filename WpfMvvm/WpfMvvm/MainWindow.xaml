@@ -21,6 +21,34 @@
 
         </ribbon:Ribbon>
 
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+
+            <Grid  Name="ContentGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel  Grid.Column="0" Name="employeeListStackPanel" Orientation="Vertical">
+
+                </StackPanel>
+
+                <GridSplitter  Grid.Column="0" ResizeDirection="Columns" Width="6"/>
+
+                <Grid  Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.5*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    
+                </Grid>
+
+            </Grid>
+
+        </ScrollViewer>
+
         <StatusBar Grid.Row="2" Height="27"></StatusBar>
+
     </Grid>
 </Window>

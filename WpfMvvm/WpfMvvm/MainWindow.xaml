@@ -8,12 +8,10 @@
         xmlns:ribbon="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" 
         
         mc:Ignorable="d" WindowState="Maximized" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" Icon="appbar.box.layered.png"
-        Title="Employee Master File" Height="600" Width="800" >
+        Title="Employee Master File" Height="600" Width="800" Loaded="Window_Loaded" >
 
-    
     <Grid Name="MainLayoutGrid">
-        
-        
+     
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -26,7 +24,7 @@
             <ribbon:Ribbon.ApplicationMenu>
                 <ribbon:RibbonApplicationMenu>
                     
-                    <ribbon:RibbonApplicationMenuItem Name="rbnCloseApp"  ToolTip="Close the application" >
+                    <ribbon:RibbonApplicationMenuItem Click="rbnCloseApp_Click" Name="rbnCloseApp"  ToolTip="Close the application" >
                         <ribbon:RibbonApplicationMenuItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <Image Height="20" Source="/Resources/Images/exit.png"/>
@@ -40,20 +38,20 @@
             </ribbon:Ribbon.ApplicationMenu>
 
             <ribbon:Ribbon.HelpPaneContent >
-                <ribbon:RibbonButton Margin="0,0,5,0" Name="rbtnHelp" Label="Help" SmallImageSource="/Resources/Images/help.png"/>
+                <ribbon:RibbonButton Click="rbtnHelp_Click" Margin="0,0,5,0" Name="rbtnHelp" Label="Help" SmallImageSource="/Resources/Images/help.png"/>
             </ribbon:Ribbon.HelpPaneContent>
 
             <ribbon:RibbonTab FontFamily="Segoe ui"   Header="HOME">
 
                 <ribbon:RibbonGroup  Header="File" >
-                    <ribbon:RibbonButton Name="btnNew" ToolTip="Add New" Label="New" SmallImageSource="/Resources/Images/new.png"/>
-                    <ribbon:RibbonButton Name="btnEdit" ToolTip="Edit Selected" Label="Edit" SmallImageSource="/Resources/Images/edit.png"/>
-                    <ribbon:RibbonButton Name="btnDelete" ToolTip="Delete selected" Label="Delete" SmallImageSource="/Resources/Images/delete.png"/>
-                    <ribbon:RibbonButton Name="btnSave" Label="Save" LargeImageSource="/Resources/Images/Save.png"/>   
+                    <ribbon:RibbonButton Click="btnNew_Click" Name="btnNew" ToolTip="Add New" Label="New" SmallImageSource="/Resources/Images/new.png"/>
+                    <ribbon:RibbonButton Click="btnEdit_Click" Name="btnEdit" ToolTip="Edit Selected" Label="Edit" SmallImageSource="/Resources/Images/edit.png"/>
+                    <ribbon:RibbonButton Click="btnDelete_Click" Name="btnDelete" ToolTip="Delete selected" Label="Delete" SmallImageSource="/Resources/Images/delete.png"/>
+                    <ribbon:RibbonButton Click="btnSave_Click" Name="btnSave" Label="Save" LargeImageSource="/Resources/Images/Save.png"/>   
                 </ribbon:RibbonGroup>
 
                 <ribbon:RibbonGroup  Header="List" >
-                    <ribbon:RibbonButton Name="btnRefresh" Label="Refresh" LargeImageSource="/Resources/Images/refresh.png"/>
+                    <ribbon:RibbonButton Click="btnRefresh_Click" Name="btnRefresh" Label="Refresh" LargeImageSource="/Resources/Images/refresh.png"/>
                 </ribbon:RibbonGroup>
 
 
@@ -71,10 +69,10 @@
 
                 <StackPanel  Grid.Column="0" Name="employeeListStackPanel" Orientation="Vertical">
 
-                    <TextBox Name="txtSearch"  Margin="5,0,5,0" />
+                    <TextBox  KeyUp="txtSearch_KeyUp" Name="txtSearch"  Margin="5,0,5,0" />
 
-                    <DataGrid IsReadOnly="True" GridLinesVisibility="Horizontal" Margin="5,0,5,5"  Background="White"
-                              VerticalAlignment="Stretch">
+                    <DataGrid SelectionChanged="DataGrid_SelectionChanged"  IsReadOnly="True" GridLinesVisibility="Horizontal" Margin="5,0,5,5"  Background="White"
+                              VerticalAlignment="Stretch" Name="dgvEmployees">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="First Name"/>
                             <DataGridTextColumn  Header="Surname"/>
@@ -126,15 +124,15 @@
                                 <TextBox Grid.Column="1" Grid.Row="1" Margin="2,2,2,5" Name="txtFirstName" />
 
                                 <StackPanel Grid.Column="1" Grid.Row="2" Margin="2,5,2,5" Orientation="Horizontal">
-                                    <RadioButton Name="rbtnMale" Margin="2,2,5,2" IsChecked="True">Male</RadioButton>
-                                    <RadioButton Name="rntFemale" Margin="5,2,2,2">Female</RadioButton>
+                                    <RadioButton Checked="rbtnMale_Checked" Name="rbtnMale" Margin="2,2,5,2" IsChecked="True">Male</RadioButton>
+                                    <RadioButton Checked="rntFemale_Checked" Name="rntFemale" Margin="5,2,2,2">Female</RadioButton>
                                 </StackPanel>
 
                                 <Label Grid.Column="0" Grid.Row="3" Margin="2">Department:</Label>
                                 <ComboBox Grid.Column="1" Grid.Row="3" Margin="2,2,2,5" IsEditable="True" Name="cmbDepartments"/>
 
                                 <Label Grid.Column="0" Grid.Row="4" Margin="2">Montly Gross Salary:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="4" Margin="2,2,2,5" Name="txtGrossSalary"/>
+                                <TextBox TextChanged="txtGrossSalary_TextChanged" Grid.Column="1" Grid.Row="4" Margin="2,2,2,5" Name="txtGrossSalary"/>
 
                                 <Label Grid.Column="0" Grid.Row="5" Margin="2">PAYE:</Label>
                                 <TextBox  Grid.Column="1" Grid.Row="5" Margin="2,2,2,5" IsReadOnly="True" FontWeight="Medium" Name="txtPayee"/>

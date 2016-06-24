@@ -37,10 +37,18 @@
 
                 <Grid  Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1.5*"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
+                    <Grid MinHeight="200"  Grid.Row="0" Margin="5">
+                        
+                    </Grid>
+
+                    <Border Grid.Row="1" BorderBrush="#FF4272BF" BorderThickness="2,2,2,5" Margin="5" >
+                        
+                        
+                    </Border>
                     
                 </Grid>
 

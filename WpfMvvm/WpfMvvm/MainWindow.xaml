@@ -54,7 +54,13 @@
 
                     <Grid MinHeight="200"  Grid.Row="0" Margin="5">
 
-                        <GroupBox Header="Employee Details" Padding="5">
+                        <GroupBox  Padding="5">
+                            <GroupBox.Header>
+                                <Border Padding="6" Background="#FF4272BF" CornerRadius="7,7,0,0" >
+                                    <TextBlock Foreground="White" >Employee Details</TextBlock>
+                                </Border>
+                            </GroupBox.Header>
+                            
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>

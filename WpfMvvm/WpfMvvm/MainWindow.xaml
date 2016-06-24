@@ -10,7 +10,10 @@
         mc:Ignorable="d" WindowState="Maximized" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" Icon="appbar.box.layered.png"
         Title="Employee Master File" Height="600" Width="800" >
 
+    
     <Grid Name="MainLayoutGrid">
+        
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -19,6 +22,43 @@
 
         <ribbon:Ribbon Grid.Row="0" >
 
+            <!--Application Menu-->
+            <ribbon:Ribbon.ApplicationMenu>
+                <ribbon:RibbonApplicationMenu>
+                    
+                    <ribbon:RibbonApplicationMenuItem Name="rbnCloseApp"  ToolTip="Close the application" >
+                        <ribbon:RibbonApplicationMenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Height="20" Source="/Resources/Images/exit.png"/>
+                                <Label Margin="2" VerticalAlignment="Center">Close</Label>
+                            </StackPanel>
+
+                        </ribbon:RibbonApplicationMenuItem.Header>
+                    </ribbon:RibbonApplicationMenuItem>
+
+                </ribbon:RibbonApplicationMenu>
+            </ribbon:Ribbon.ApplicationMenu>
+
+            <ribbon:Ribbon.HelpPaneContent >
+                <ribbon:RibbonButton Margin="0,0,5,0" Name="rbtnHelp" Label="Help" SmallImageSource="/Resources/Images/help.png"/>
+            </ribbon:Ribbon.HelpPaneContent>
+
+            <ribbon:RibbonTab FontFamily="Segoe ui"   Header="HOME">
+
+                <ribbon:RibbonGroup  Header="File" >
+                    <ribbon:RibbonButton Name="btnNew" ToolTip="Add New" Label="New" SmallImageSource="/Resources/Images/new.png"/>
+                    <ribbon:RibbonButton Name="btnEdit" ToolTip="Edit Selected" Label="Edit" SmallImageSource="/Resources/Images/edit.png"/>
+                    <ribbon:RibbonButton Name="btnDelete" ToolTip="Delete selected" Label="Delete" SmallImageSource="/Resources/Images/delete.png"/>
+                    <ribbon:RibbonButton Name="btnSave" Label="Save" LargeImageSource="/Resources/Images/Save.png"/>   
+                </ribbon:RibbonGroup>
+
+                <ribbon:RibbonGroup  Header="List" >
+                    <ribbon:RibbonButton Name="btnRefresh" Label="Refresh" LargeImageSource="/Resources/Images/refresh.png"/>
+                </ribbon:RibbonGroup>
+
+
+            </ribbon:RibbonTab>
+            
         </ribbon:Ribbon>
 
         <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,5,0,22" Grid.RowSpan="2">
@@ -30,9 +70,9 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel  Grid.Column="0" Name="employeeListStackPanel" Orientation="Vertical">
-                    
+
                     <TextBox Name="txtSearch"  Margin="5,0,5,0" />
-                    
+
                     <DataGrid IsReadOnly="True" GridLinesVisibility="Horizontal" Margin="5,0,5,5"  Background="White"
                               VerticalAlignment="Stretch">
                         <DataGrid.Columns>
@@ -40,7 +80,7 @@
                             <DataGridTextColumn  Header="Surname"/>
                             <DataGridCheckBoxColumn Header="Has Pension Fund"/>
                         </DataGrid.Columns>
-                        
+
                     </DataGrid>
                 </StackPanel>
 
@@ -60,7 +100,7 @@
                                     <TextBlock Foreground="White" >Employee Details</TextBlock>
                                 </Border>
                             </GroupBox.Header>
-                            
+
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -103,10 +143,10 @@
                                 <TextBox  Grid.Column="1" Grid.Row="6" Margin="2,2,2,5" IsReadOnly="True" FontWeight="Medium" Name="txtNetSalary"/>
 
                                 <CheckBox Grid.Column="1" Grid.Row="7" Margin="2,10,2,5">Has Pension Fund</CheckBox>
-                                
+
                             </Grid>
                         </GroupBox>
-                        
+
                     </Grid>
 
                     <Border Grid.Row="1" BorderBrush="#FF4272BF" BorderThickness="2,2,2,5" Margin="5" >

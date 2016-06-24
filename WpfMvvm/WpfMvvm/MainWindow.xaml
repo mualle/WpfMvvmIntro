@@ -7,7 +7,7 @@
         
         xmlns:ribbon="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" 
         
-        mc:Ignorable="d" WindowState="Normal" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" Icon="appbar.box.layered.png"
+        mc:Ignorable="d" WindowState="Maximized" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" Icon="appbar.box.layered.png"
         Title="Employee Master File" Height="600" Width="800" >
 
     <Grid Name="MainLayoutGrid">
@@ -21,7 +21,7 @@
 
         </ribbon:Ribbon>
 
-        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,5,0,22" Grid.RowSpan="2">
 
             <Grid  Name="ContentGrid">
                 <Grid.ColumnDefinitions>
@@ -30,7 +30,18 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel  Grid.Column="0" Name="employeeListStackPanel" Orientation="Vertical">
-
+                    
+                    <TextBox Name="txtSearch"  Margin="5,0,5,0" />
+                    
+                    <DataGrid IsReadOnly="True" GridLinesVisibility="Horizontal" Margin="5,0,5,5"  Background="White"
+                              VerticalAlignment="Stretch">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="First Name"/>
+                            <DataGridTextColumn  Header="Surname"/>
+                            <DataGridCheckBoxColumn Header="Has Pension Fund"/>
+                        </DataGrid.Columns>
+                        
+                    </DataGrid>
                 </StackPanel>
 
                 <GridSplitter  Grid.Column="0" ResizeDirection="Columns" Width="6"/>
@@ -42,14 +53,61 @@
                     </Grid.RowDefinitions>
 
                     <Grid MinHeight="200"  Grid.Row="0" Margin="5">
+
+                        <GroupBox Header="Employee Details" Padding="5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0" Grid.Row="0" Margin="2">Employee #:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="0" Margin="2,2,2,5" IsEnabled="False" Name="txtEmployeeNo"/>
+
+                                <Label Grid.Column="0" Grid.Row="1" Margin="2">First Name:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="1" Margin="2,2,2,5" Name="txtFirstName" />
+
+                                <StackPanel Grid.Column="1" Grid.Row="2" Margin="2,5,2,5" Orientation="Horizontal">
+                                    <RadioButton Name="rbtnMale" Margin="2,2,5,2" IsChecked="True">Male</RadioButton>
+                                    <RadioButton Name="rntFemale" Margin="5,2,2,2">Female</RadioButton>
+                                </StackPanel>
+
+                                <Label Grid.Column="0" Grid.Row="3" Margin="2">Department:</Label>
+                                <ComboBox Grid.Column="1" Grid.Row="3" Margin="2,2,2,5" IsEditable="True" Name="cmbDepartments"/>
+
+                                <Label Grid.Column="0" Grid.Row="4" Margin="2">Montly Gross Salary:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="4" Margin="2,2,2,5" Name="txtGrossSalary"/>
+
+                                <Label Grid.Column="0" Grid.Row="5" Margin="2">PAYE:</Label>
+                                <TextBox  Grid.Column="1" Grid.Row="5" Margin="2,2,2,5" IsReadOnly="True" FontWeight="Medium" Name="txtPayee"/>
+
+                                <Label Grid.Column="0" Grid.Row="6" Margin="2">Net Salary:</Label>
+                                <TextBox  Grid.Column="1" Grid.Row="6" Margin="2,2,2,5" IsReadOnly="True" FontWeight="Medium" Name="txtNetSalary"/>
+
+                                <CheckBox Grid.Column="1" Grid.Row="7" Margin="2,10,2,5">Has Pension Fund</CheckBox>
+                                
+                            </Grid>
+                        </GroupBox>
                         
                     </Grid>
 
                     <Border Grid.Row="1" BorderBrush="#FF4272BF" BorderThickness="2,2,2,5" Margin="5" >
-                        
-                        
+
+
                     </Border>
-                    
+
                 </Grid>
 
             </Grid>

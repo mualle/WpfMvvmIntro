@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WpfMvvm.Models;
 using System.Linq;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 
 namespace WpfMvvm.ViewModels
 {
@@ -19,13 +19,15 @@ namespace WpfMvvm.ViewModels
             Employees = new ObservableCollection<Employee>();
             InitDepartments();
 
-            SaveCommand = new RelayCommand(() => this.Save(), () => this.Valid());
+           
             CloseView = new RelayCommand(() => this.Close(), () => true);
-            CancelCommnad = new RelayCommand(() => this.Cancel(), () => IsInEditMode);
+            CancelCommand = new RelayCommand(() => this.Cancel(), () =>  true);
             NewCommand = new RelayCommand(() => this.New(), () => true);
             EditCommand = new RelayCommand(() => this.Edit(), () => CanEdit);
             DeleteCommand = new RelayCommand(() => this.Delete(), () => CanEdit);
             HelCommand = new RelayCommand(() => this.OpenHelp(), () => true);
+            RefreshCommand = new RelayCommand(() => this.Refresh(), () => IsInEditMode == false);
+            SaveCommand = new RelayCommand(() => this.Save(), () => CanSave);
         }
 
         #region Primitive Binding Properties
@@ -71,8 +73,14 @@ namespace WpfMvvm.ViewModels
             {
                 _isMale = value;
                 OnpropertyChanged("IsMale");
+                OnpropertyChanged("IsFemale");
             }
         }
+        public bool IsFemale
+        {
+            get { return !IsMale; }
+        }
+
 
         private string _department;
         public string Department
@@ -141,7 +149,7 @@ namespace WpfMvvm.ViewModels
             set;
         }
 
-        public RelayCommand CancelCommnad
+        public RelayCommand CancelCommand
         {
             get;
             set;
@@ -170,7 +178,13 @@ namespace WpfMvvm.ViewModels
             get;
             set;
         }
-       
+
+        public RelayCommand RefreshCommand
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         private bool _canEdit = false;
@@ -241,15 +255,7 @@ namespace WpfMvvm.ViewModels
         {
             if (SelectedEmployee == null)
             {
-                Id = Guid.Empty;
-                Name = null;
-                Surname = null;
-                IsMale = true;
-                Department = null;
-                Gross = 0;
-                HasPensionFund = false;
-
-                IsInEditMode = false;
+                ClearInputs();
             }
             else
             {
@@ -259,15 +265,37 @@ namespace WpfMvvm.ViewModels
                 IsMale = SelectedEmployee.IsMale;
                 Department = SelectedEmployee.Department;
                 Gross = SelectedEmployee.Gross;
+                HasPensionFund = SelectedEmployee.HasPensionFund;
             }
+        }
+
+        private void ClearInputs()
+        {
+            Id = Guid.Empty;
+            Name = null;
+            Surname = null;
+            IsMale = true;
+            Department = null;
+            Gross = 0;
+            HasPensionFund = false;
+
+            IsInEditMode = false;
+        }
+
+        private bool CanSave
+        {
+            get { return Valid(); }
         }
 
         private bool Valid()
         {
-            return (!string.IsNullOrWhiteSpace(Name)
-                && !string.IsNullOrWhiteSpace(Surname)
-                && !string.IsNullOrWhiteSpace(Department) 
-                && Gross > 0);
+            if(string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Surname) || string.IsNullOrWhiteSpace(Department) || Gross <= 0)
+            {
+                return false;
+            }
+
+            return true;
+
         }
 
         private void OpenHelp()
@@ -309,39 +337,41 @@ namespace WpfMvvm.ViewModels
 
         private void Save()
         {
-            var selectedEmployee = Employees.FirstOrDefault(x => x.Id == Id);
-            if (selectedEmployee == null)
+            if (Valid())
             {
-                Employees.Add(new Employee
+                var selectedEmployee = Employees.FirstOrDefault(x => x.Id == Id);
+                if (selectedEmployee == null)
                 {
-                    Id = Id,
-                    Name = Name,
-                    Surname = Surname,
-                    IsMale = IsMale,
-                    Department = Department,
-                    Gross = Gross,
-                    HasPensionFund = HasPensionFund,
-                    Payee = Payee
+                    Employees.Add(new Employee
+                    {
+                        Id = Id,
+                        Name = Name,
+                        Surname = Surname,
+                        IsMale = IsMale,
+                        Department = Department,
+                        Gross = Gross,
+                        HasPensionFund = HasPensionFund,
+                        Payee = Payee
 
-                });
+                    });
 
-                selectedEmployee = null;
-                IsInEditMode = false;
-            }
-            else
-            {
-                selectedEmployee.Name = Name;
-                selectedEmployee.Surname = Surname;
-                selectedEmployee.IsMale = IsMale;
-                selectedEmployee.Department = Department;
-                selectedEmployee.Gross = Gross;
-                selectedEmployee.HasPensionFund = HasPensionFund;
-                selectedEmployee.Payee = Payee;
+                    ClearInputs();
+                }
+                else
+                {
+                    selectedEmployee.Name = Name;
+                    selectedEmployee.Surname = Surname;
+                    selectedEmployee.IsMale = IsMale;
+                    selectedEmployee.Department = Department;
+                    selectedEmployee.Gross = Gross;
+                    selectedEmployee.HasPensionFund = HasPensionFund;
+                    selectedEmployee.Payee = Payee;
 
-                OnpropertyChanged("Employees");
+                    Refresh();
 
-                SelectedEmployee = selectedEmployee;
-                IsInEditMode = false;
+                     SelectedEmployee = selectedEmployee;
+                    IsInEditMode = false;
+                }
             }
         }
 
@@ -352,7 +382,19 @@ namespace WpfMvvm.ViewModels
 
         private void Refresh()
         {
-            OnpropertyChanged("Employees");
+            List<Employee> _tempEmployess = new List<Employee>();
+            foreach (var emp in Employees)
+            {
+                _tempEmployess.Add(emp);
+            }
+
+            Employees.Clear();
+            foreach (var emp in _tempEmployess)
+            {
+                Employees.Add(emp);
+            }
+
+
         }
 
         private decimal CalculatePAYE(decimal taxableAmount)

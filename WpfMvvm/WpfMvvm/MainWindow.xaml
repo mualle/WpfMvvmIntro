@@ -10,10 +10,10 @@
         mc:Ignorable="d" WindowState="Maximized" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" Icon="appbar.box.layered.png"
         Title="Employee Master File" Height="600" Width="800" >
 
-    
+
     <Grid Name="MainLayoutGrid">
-        
-        
+
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -25,8 +25,8 @@
             <!--Application Menu-->
             <ribbon:Ribbon.ApplicationMenu>
                 <ribbon:RibbonApplicationMenu>
-                    
-                    <ribbon:RibbonApplicationMenuItem Name="rbnCloseApp"  ToolTip="Close the application" >
+
+                    <ribbon:RibbonApplicationMenuItem Command="{Binding Path=CloseView}" Name="rbnCloseApp"  ToolTip="Close the application" >
                         <ribbon:RibbonApplicationMenuItem.Header>
                             <StackPanel Orientation="Horizontal">
                                 <Image Height="20" Source="/Resources/Images/exit.png"/>
@@ -40,25 +40,25 @@
             </ribbon:Ribbon.ApplicationMenu>
 
             <ribbon:Ribbon.HelpPaneContent >
-                <ribbon:RibbonButton Margin="0,0,5,0" Name="rbtnHelp" Label="Help" SmallImageSource="/Resources/Images/help.png"/>
+                <ribbon:RibbonButton Command="{Binding HelCommand}" Margin="0,0,5,0" Name="rbtnHelp" Label="Help" SmallImageSource="/Resources/Images/help.png"/>
             </ribbon:Ribbon.HelpPaneContent>
 
             <ribbon:RibbonTab FontFamily="Segoe ui"   Header="HOME">
 
                 <ribbon:RibbonGroup  Header="File" >
-                    <ribbon:RibbonButton Name="btnNew" ToolTip="Add New" Label="New" SmallImageSource="/Resources/Images/new.png"/>
-                    <ribbon:RibbonButton Name="btnEdit" ToolTip="Edit Selected" Label="Edit" SmallImageSource="/Resources/Images/edit.png"/>
-                    <ribbon:RibbonButton Name="btnDelete" ToolTip="Delete selected" Label="Delete" SmallImageSource="/Resources/Images/delete.png"/>
-                    <ribbon:RibbonButton Name="btnSave" Label="Save" LargeImageSource="/Resources/Images/Save.png"/>   
+                    <ribbon:RibbonButton  Command="{Binding NewCommand}" Name="btnNew" ToolTip="Add New" Label="New" SmallImageSource="/Resources/Images/new.png"/>
+                    <ribbon:RibbonButton  Command="{Binding EditCommand}" Name="btnEdit" ToolTip="Edit Selected" Label="Edit" SmallImageSource="/Resources/Images/edit.png"/>
+                    <ribbon:RibbonButton  Command="{Binding DeleteCommand}" Name="btnDelete" ToolTip="Delete selected" Label="Delete" SmallImageSource="/Resources/Images/delete.png"/>
+                    <ribbon:RibbonButton Command="{Binding SaveCommand}" Name="btnSave" Label="Save" LargeImageSource="/Resources/Images/Save.png"/>
                 </ribbon:RibbonGroup>
 
                 <ribbon:RibbonGroup  Header="List" >
-                    <ribbon:RibbonButton Name="btnRefresh" Label="Refresh" LargeImageSource="/Resources/Images/refresh.png"/>
+                    <ribbon:RibbonButton Command="{Binding RefreshCommand}" Name="btnRefresh" Label="Refresh" LargeImageSource="/Resources/Images/refresh.png"/>
                 </ribbon:RibbonGroup>
 
 
             </ribbon:RibbonTab>
-            
+
         </ribbon:Ribbon>
 
         <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,5,0,22" Grid.RowSpan="2">
@@ -73,12 +73,12 @@
 
                     <TextBox Name="txtSearch"  Margin="5,0,5,0" />
 
-                    <DataGrid IsReadOnly="True" GridLinesVisibility="Horizontal" Margin="5,0,5,5"  Background="White"
+                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Employees}" SelectedItem="{Binding Path=SelectedEmployee, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" GridLinesVisibility="Horizontal" Margin="5,0,5,5"  Background="White"
                               VerticalAlignment="Stretch">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="First Name"/>
-                            <DataGridTextColumn  Header="Surname"/>
-                            <DataGridCheckBoxColumn Header="Has Pension Fund"/>
+                            <DataGridTextColumn Binding="{Binding Path=Name}" Header="First Name"/>
+                            <DataGridTextColumn  Binding="{Binding Path=Surname}" Header="Surname"/>
+                            <DataGridCheckBoxColumn Binding="{Binding Path=HasPensionFund}" Header="Has Pension Fund"/>
                         </DataGrid.Columns>
 
                     </DataGrid>
@@ -94,7 +94,7 @@
 
                     <Grid MinHeight="200"  Grid.Row="0" Margin="5">
 
-                        <GroupBox  Padding="5">
+                        <GroupBox  Padding="5" IsEnabled="{Binding Path=IsInEditMode}">
                             <GroupBox.Header>
                                 <Border Padding="6" Background="#FF4272BF" CornerRadius="7,7,0,0" >
                                     <TextBlock Foreground="White" >Employee Details</TextBlock>
@@ -116,37 +116,39 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
 
                                 </Grid.RowDefinitions>
 
                                 <Label Grid.Column="0" Grid.Row="0" Margin="2">Employee #:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="0" Margin="2,2,2,5" IsEnabled="False" Name="txtEmployeeNo"/>
+                                <TextBox Text="{Binding Path=Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="0" Margin="2,2,2,5" IsEnabled="False" Name="txtEmployeeNo"/>
 
                                 <Label Grid.Column="0" Grid.Row="1" Margin="2">First Name:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="1" Margin="2,2,2,5" Name="txtFirstName" />
+                                <TextBox Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" Margin="2,2,2,5" Name="txtFirstName" />
 
-                                <Label Grid.Column="0" Grid.Row="2" Margin="2">First Name:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="2" Margin="2,2,2,5" Name="txtLastName" />
+                                <Label Grid.Column="0" Grid.Row="2" Margin="2">Surname:</Label>
+                                <TextBox Text="{Binding Path=Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2" Margin="2,2,2,5" Name="txtLastName" />
 
                                 <StackPanel Grid.Column="1" Grid.Row="3" Margin="2,5,2,5" Orientation="Horizontal">
-                                    <RadioButton Name="rbtnMale" Margin="2,2,5,2" IsChecked="True">Male</RadioButton>
-                                    <RadioButton Name="rntFemale" Margin="5,2,2,2">Female</RadioButton>
+                                    <RadioButton IsChecked="{Binding Path=IsMale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="rbtnMale" Margin="2,2,5,2" >Male</RadioButton>
+                                    <RadioButton IsChecked="{Binding Path=IsFemale, Mode=OneWay}"  Name="rntFemale" Margin="5,2,2,2">Female</RadioButton>
                                 </StackPanel>
 
                                 <Label Grid.Column="0" Grid.Row="4" Margin="2">Department:</Label>
-                                <ComboBox Grid.Column="1" Grid.Row="4" Margin="2,2,2,5" IsEditable="True" Name="cmbDepartments"/>
+                                <ComboBox ItemsSource="{Binding Path=Departments}" DisplayMemberPath="Name"  SelectedValuePath="Name" SelectedItem="{Binding Path=Department, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" Margin="2,2,2,5"  Name="cmbDepartments"/>
 
                                 <Label Grid.Column="0" Grid.Row="5" Margin="2">Montly Gross Salary:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="5" Margin="2,2,2,5" Name="txtGrossSalary"/>
+                                <TextBox Text="{Binding Path=Gross, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" Margin="2,2,2,5" Name="txtGrossSalary"/>
 
                                 <Label Grid.Column="0" Grid.Row="6" Margin="2">PAYE:</Label>
-                                <TextBox  Grid.Column="1" Grid.Row="6" Margin="2,2,2,5" IsReadOnly="True" FontWeight="Medium" Name="txtPayee"/>
+                                <TextBox Text="{Binding Path=Payee, Mode=TwoWay}"  Grid.Column="1" Grid.Row="6" Margin="2,2,2,5" IsReadOnly="True" FontWeight="Medium" Name="txtPayee"/>
 
                                 <Label Grid.Column="0" Grid.Row="7" Margin="2">Net Salary:</Label>
-                                <TextBox  Grid.Column="1" Grid.Row="7" Margin="2,2,2,5" IsReadOnly="True" FontWeight="Medium" Name="txtNetSalary"/>
+                                <TextBox  Text="{Binding Path=Net, Mode=OneWay}" Grid.Column="1" Grid.Row="7" Margin="2,2,2,5" IsReadOnly="True" FontWeight="Medium" Name="txtNetSalary"/>
 
-                                <CheckBox Grid.Column="1" Grid.Row="8" Margin="2,10,2,5">Has Pension Fund</CheckBox>
+                                <CheckBox IsChecked="{Binding Path=HasPensionFund,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="8" Margin="2,10,2,5">Has Pension Fund</CheckBox>
 
+                                <Button Command="{Binding CancelCommand}" Width="100" HorizontalAlignment="Right" Margin="5" Grid.Row="9" Grid.Column="1">Cancel</Button>
                             </Grid>
                         </GroupBox>
 

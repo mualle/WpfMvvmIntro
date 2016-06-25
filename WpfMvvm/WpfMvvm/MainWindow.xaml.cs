@@ -23,6 +23,10 @@ namespace WpfMvvm
         public MainWindow()
         {
             InitializeComponent();
+
+            var vm = new ViewModels.EmployeeViewModel();
+            vm.CloseAction = new Action(() => this.Close());
+            this.DataContext = vm;
         }
     }
 }

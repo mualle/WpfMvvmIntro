@@ -125,24 +125,27 @@
                                 <Label Grid.Column="0" Grid.Row="1" Margin="2">First Name:</Label>
                                 <TextBox Grid.Column="1" Grid.Row="1" Margin="2,2,2,5" Name="txtFirstName" />
 
-                                <StackPanel Grid.Column="1" Grid.Row="2" Margin="2,5,2,5" Orientation="Horizontal">
+                                <Label Grid.Column="0" Grid.Row="2" Margin="2">First Name:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="2" Margin="2,2,2,5" Name="txtLastName" />
+
+                                <StackPanel Grid.Column="1" Grid.Row="3" Margin="2,5,2,5" Orientation="Horizontal">
                                     <RadioButton Name="rbtnMale" Margin="2,2,5,2" IsChecked="True">Male</RadioButton>
                                     <RadioButton Name="rntFemale" Margin="5,2,2,2">Female</RadioButton>
                                 </StackPanel>
 
-                                <Label Grid.Column="0" Grid.Row="3" Margin="2">Department:</Label>
-                                <ComboBox Grid.Column="1" Grid.Row="3" Margin="2,2,2,5" IsEditable="True" Name="cmbDepartments"/>
+                                <Label Grid.Column="0" Grid.Row="4" Margin="2">Department:</Label>
+                                <ComboBox Grid.Column="1" Grid.Row="4" Margin="2,2,2,5" IsEditable="True" Name="cmbDepartments"/>
 
-                                <Label Grid.Column="0" Grid.Row="4" Margin="2">Montly Gross Salary:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="4" Margin="2,2,2,5" Name="txtGrossSalary"/>
+                                <Label Grid.Column="0" Grid.Row="5" Margin="2">Montly Gross Salary:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="5" Margin="2,2,2,5" Name="txtGrossSalary"/>
 
-                                <Label Grid.Column="0" Grid.Row="5" Margin="2">PAYE:</Label>
-                                <TextBox  Grid.Column="1" Grid.Row="5" Margin="2,2,2,5" IsReadOnly="True" FontWeight="Medium" Name="txtPayee"/>
+                                <Label Grid.Column="0" Grid.Row="6" Margin="2">PAYE:</Label>
+                                <TextBox  Grid.Column="1" Grid.Row="6" Margin="2,2,2,5" IsReadOnly="True" FontWeight="Medium" Name="txtPayee"/>
 
-                                <Label Grid.Column="0" Grid.Row="6" Margin="2">Net Salary:</Label>
-                                <TextBox  Grid.Column="1" Grid.Row="6" Margin="2,2,2,5" IsReadOnly="True" FontWeight="Medium" Name="txtNetSalary"/>
+                                <Label Grid.Column="0" Grid.Row="7" Margin="2">Net Salary:</Label>
+                                <TextBox  Grid.Column="1" Grid.Row="7" Margin="2,2,2,5" IsReadOnly="True" FontWeight="Medium" Name="txtNetSalary"/>
 
-                                <CheckBox Grid.Column="1" Grid.Row="7" Margin="2,10,2,5">Has Pension Fund</CheckBox>
+                                <CheckBox Grid.Column="1" Grid.Row="8" Margin="2,10,2,5">Has Pension Fund</CheckBox>
 
                             </Grid>
                         </GroupBox>

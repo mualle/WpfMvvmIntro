@@ -11,7 +11,7 @@
         Title="Employee Master File" Height="600" Width="800" Loaded="Window_Loaded" >
 
     <Grid Name="MainLayoutGrid">
-     
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -23,7 +23,7 @@
             <!--Application Menu-->
             <ribbon:Ribbon.ApplicationMenu>
                 <ribbon:RibbonApplicationMenu>
-                    
+
                     <ribbon:RibbonApplicationMenuItem Click="rbnCloseApp_Click" Name="rbnCloseApp"  ToolTip="Close the application" >
                         <ribbon:RibbonApplicationMenuItem.Header>
                             <StackPanel Orientation="Horizontal">
@@ -47,7 +47,7 @@
                     <ribbon:RibbonButton Click="btnNew_Click" Name="btnNew" ToolTip="Add New" Label="New" SmallImageSource="/Resources/Images/new.png"/>
                     <ribbon:RibbonButton Click="btnEdit_Click" Name="btnEdit" ToolTip="Edit Selected" Label="Edit" SmallImageSource="/Resources/Images/edit.png"/>
                     <ribbon:RibbonButton Click="btnDelete_Click" Name="btnDelete" ToolTip="Delete selected" Label="Delete" SmallImageSource="/Resources/Images/delete.png"/>
-                    <ribbon:RibbonButton Click="btnSave_Click" Name="btnSave" Label="Save" LargeImageSource="/Resources/Images/Save.png"/>   
+                    <ribbon:RibbonButton Click="btnSave_Click" Name="btnSave" Label="Save" LargeImageSource="/Resources/Images/Save.png"/>
                 </ribbon:RibbonGroup>
 
                 <ribbon:RibbonGroup  Header="List" >
@@ -56,7 +56,7 @@
 
 
             </ribbon:RibbonTab>
-            
+
         </ribbon:Ribbon>
 
         <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,5,0,22" Grid.RowSpan="2">
@@ -71,12 +71,14 @@
 
                     <TextBox  KeyUp="txtSearch_KeyUp" Name="txtSearch"  Margin="5,0,5,0" />
 
-                    <DataGrid AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged"  IsReadOnly="True" GridLinesVisibility="Horizontal" Margin="5,0,5,5"  Background="White"
+                    <DataGrid RowHeight="25" AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged"  IsReadOnly="True" GridLinesVisibility="Horizontal" Margin="5,0,5,5"  Background="White"
                               VerticalAlignment="Stretch" Name="dgvEmployees">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="First Name"/>
-                            <DataGridTextColumn  Header="Surname"/>
-                            <DataGridCheckBoxColumn Header="Has Pension Fund"/>
+                            <DataGridTextColumn Binding="{Binding Path=Id}" Header="Emp. #"/>
+                            <DataGridTextColumn Binding="{Binding Path=FirstName}" Header="First Name"/>
+                            <DataGridTextColumn Binding="{Binding Path=LastName}"  Header="Surname"/>
+                            <DataGridTextColumn Binding="{Binding Path=Gender}"  Header="Gender"/>
+                            <DataGridCheckBoxColumn Binding="{Binding Path=HasPensionFund}" Header="Has Pension Fund"/>
                         </DataGrid.Columns>
 
                     </DataGrid>
@@ -92,7 +94,7 @@
 
                     <Grid MinHeight="200"  Grid.Row="0" Margin="5">
 
-                        <GroupBox Name="grpBoxEmployeeDetails" Padding="5">
+                        <GroupBox  Name="grpBoxEmployeeDetails" Padding="5">
                             <GroupBox.Header>
                                 <Border Padding="6" Background="#FF4272BF" CornerRadius="7,7,0,0" >
                                     <TextBlock Foreground="White" >Employee Details</TextBlock>
@@ -115,7 +117,7 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
-                                    
+
                                 </Grid.RowDefinitions>
 
                                 <Label Grid.Column="0" Grid.Row="0" Margin="2">Employee #:</Label>
@@ -144,7 +146,7 @@
                                 <Label Grid.Column="0" Grid.Row="7" Margin="2">Net Salary:</Label>
                                 <TextBox  Grid.Column="1" Grid.Row="7" Margin="2,2,2,5" IsReadOnly="True" FontWeight="Medium" Name="txtNetSalary"/>
 
-                                <CheckBox Grid.Column="1" Grid.Row="8" Margin="2,10,2,5">Has Pension Fund</CheckBox>
+                                <CheckBox Grid.Column="1" Grid.Row="8" Margin="2,10,2,5" Name="chkHasPensionFund">Has Pension Fund</CheckBox>
 
                                 <Button Name="btnCancel" Grid.Column="1" HorizontalAlignment="Right"
                                         Margin="5" Grid.Row="9" Padding="5" Height="30">Cancel</Button>
@@ -167,4 +169,5 @@
         <StatusBar Grid.Row="2" Height="27"></StatusBar>
 
     </Grid>
+
 </Window>

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WpfMvvm.Models;
 using System.Linq;
+using GalaSoft.MvvmLight.Command;
 
 namespace WpfMvvm.ViewModels
 {
@@ -17,6 +18,14 @@ namespace WpfMvvm.ViewModels
 
             Employees = new ObservableCollection<Employee>();
             InitDepartments();
+
+            SaveCommand = new RelayCommand(() => this.Save(), () => this.Valid());
+            CloseView = new RelayCommand(() => this.Close(), () => true);
+            CancelCommnad = new RelayCommand(() => this.Cancel(), () => IsInEditMode);
+            NewCommand = new RelayCommand(() => this.New(), () => true);
+            EditCommand = new RelayCommand(() => this.Edit(), () => CanEdit);
+            DeleteCommand = new RelayCommand(() => this.Delete(), () => CanEdit);
+            HelCommand = new RelayCommand(() => this.OpenHelp(), () => true);
         }
 
         #region Primitive Binding Properties
@@ -116,6 +125,52 @@ namespace WpfMvvm.ViewModels
             }
         }
 
+        #endregion
+
+        #region Commands
+
+        public RelayCommand SaveCommand
+        {
+            get;
+            set;
+        }
+
+        public RelayCommand CloseView
+        {
+            get;
+            set;
+        }
+
+        public RelayCommand CancelCommnad
+        {
+            get;
+            set;
+        }
+
+        public RelayCommand EditCommand
+        {
+            get;
+            set;
+        }
+
+        public RelayCommand NewCommand
+        {
+            get;
+            set;
+        }
+
+        public RelayCommand DeleteCommand
+        {
+            get;
+            set;
+        }
+
+        public RelayCommand HelCommand
+        {
+            get;
+            set;
+        }
+       
         #endregion
 
         private bool _canEdit = false;

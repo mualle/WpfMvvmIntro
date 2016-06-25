@@ -5,6 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfMvvm"
         
+        xmlns:DV="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        
         xmlns:ribbon="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" 
         
         mc:Ignorable="d" WindowState="Maximized" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" Icon="appbar.box.layered.png"
@@ -199,7 +202,11 @@
 
                     <Border Grid.Row="1" BorderBrush="#FF4272BF" BorderThickness="2,2,2,5" Margin="5" >
 
-
+                        <Grid>
+                            <DVC:Chart Title="Employees by Departments" Height="400" Width="500">
+                                <DVC:PieSeries DependentValuePath="Value" IndependentValuePath="Key" ItemsSource="{Binding Path=Stats}"  IsSelectionEnabled="True" />
+                            </DVC:Chart>
+                        </Grid>
                     </Border>
 
                 </Grid>

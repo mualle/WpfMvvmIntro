@@ -29,6 +29,8 @@ namespace WpfMvvm.ViewModels
             HelCommand = new RelayCommand(() => this.OpenHelp(), () => true);
             RefreshCommand = new RelayCommand(() => this.Refresh(), () => IsInEditMode == false);
             SaveCommand = new RelayCommand(() => this.Save(), () => CanSave);
+
+            Stats = new ObservableCollection<KeyValuePair<string, int>>();
         }
 
         #region Primitive Binding Properties
@@ -239,7 +241,12 @@ namespace WpfMvvm.ViewModels
             protected set;
         }
 
-       
+        public ObservableCollection<KeyValuePair<string, int>> Stats
+        {
+            get; set;
+        }
+
+
 
         public Action CloseAction { get; set; }
 
@@ -377,7 +384,23 @@ namespace WpfMvvm.ViewModels
                      SelectedEmployee = selectedEmployee;
                     IsInEditMode = false;
                 }
+
+                GetStats();
             }
+        }
+
+        private void GetStats()
+        {
+            var departments = from emp in Employees
+                              group emp by emp.Department into grp
+                              select new { Key = grp.Key, Value = grp.Count() };
+
+            Stats.Clear();
+            foreach (var dep in departments.ToList())
+            {
+                Stats.Add(new KeyValuePair<string, int>(dep.Key, dep.Value));
+            }
+
         }
 
         private void Delete()
@@ -399,8 +422,8 @@ namespace WpfMvvm.ViewModels
                 Employees.Add(emp);
             }
 
-           
 
+            GetStats();
         }
 
         private decimal CalculatePAYE(decimal taxableAmount)

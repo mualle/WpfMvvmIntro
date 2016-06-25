@@ -61,7 +61,7 @@
 
         </ribbon:Ribbon>
 
-        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,5,0,22" Grid.RowSpan="2">
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,5,0,22" Grid.RowSpan="2" >
 
             <Grid  Name="ContentGrid">
                 <Grid.ColumnDefinitions>
@@ -73,11 +73,54 @@
 
                     <TextBox Name="txtSearch"  Margin="5,0,5,0" />
 
-                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Employees}" SelectedItem="{Binding Path=SelectedEmployee, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" GridLinesVisibility="Horizontal" Margin="5,0,5,5"  Background="White"
+                    <DataGrid Name="dgvEmployees" AutoGenerateColumns="False" ItemsSource="{Binding GroupableEmployees}" SelectedItem="{Binding Path=SelectedEmployee, UpdateSourceTrigger=PropertyChanged}"
+                              IsReadOnly="True" GridLinesVisibility="Horizontal" Margin="5,0,5,5"  Background="White" RowHeight="25"
                               VerticalAlignment="Stretch">
+                        <DataGrid.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Path=Department}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                                <GroupStyle.ContainerStyle>
+                                    <Style TargetType="{x:Type GroupItem}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                    <Expander IsExpanded="True" Background="#FFC4D5DE" BorderBrush="#FFF7F9FA"  BorderThickness="1,1,1,5">
+                                                        <Expander.Header>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Margin="0,0,4,0" Foreground="Black" FontWeight="SemiBold" Text="{Binding Path=Name}" />
+                                                                <TextBlock  Text="{Binding Path=ItemCount}"/>
+                                                                <TextBlock   Text=" Employees"/>
+                                                            </StackPanel>
+                                                        </Expander.Header>
+                                                        <ItemsPresenter />
+                                                    </Expander>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </GroupStyle.ContainerStyle>
+                            </GroupStyle>
+                        </DataGrid.GroupStyle>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HasPensionFund}" Value="True">
+                                        <Setter Property="FontWeight" Value="Black"></Setter>
+                                    </DataTrigger>
+                                    
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Path=Name}" Header="First Name"/>
                             <DataGridTextColumn  Binding="{Binding Path=Surname}" Header="Surname"/>
+                            <DataGridTextColumn  Binding="{Binding Path=Department}" Header="Surname"/>
                             <DataGridCheckBoxColumn Binding="{Binding Path=HasPensionFund}" Header="Has Pension Fund"/>
                         </DataGrid.Columns>
 
@@ -135,7 +178,7 @@
                                 </StackPanel>
 
                                 <Label Grid.Column="0" Grid.Row="4" Margin="2">Department:</Label>
-                                <ComboBox ItemsSource="{Binding Path=Departments}" DisplayMemberPath="Name"  SelectedValuePath="Name" SelectedItem="{Binding Path=Department, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" Margin="2,2,2,5"  Name="cmbDepartments"/>
+                                <ComboBox ItemsSource="{Binding Path=Departments}" DisplayMemberPath="Name"  SelectedValuePath="Name" SelectedValue="{Binding Path=Department, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4" Margin="2,2,2,5"  Name="cmbDepartments"/>
 
                                 <Label Grid.Column="0" Grid.Row="5" Margin="2">Montly Gross Salary:</Label>
                                 <TextBox Text="{Binding Path=Gross, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" Margin="2,2,2,5" Name="txtGrossSalary"/>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfMvvm.Models
 {
-    public class Department
+    public class DepartmentModel
     {
         public string Name { get; set; }
     }

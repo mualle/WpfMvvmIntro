@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WpfMvvm.Models;
 using System.Linq;
 using GalaSoft.MvvmLight.CommandWpf;
+using System.Windows.Data;
 
 namespace WpfMvvm.ViewModels
 {
@@ -226,7 +227,7 @@ namespace WpfMvvm.ViewModels
             }
         }
 
-        public ObservableCollection<Department> Departments
+        public ObservableCollection<DepartmentModel> Departments
         {
             get;
             protected set;
@@ -238,17 +239,19 @@ namespace WpfMvvm.ViewModels
             protected set;
         }
 
+       
+
         public Action CloseAction { get; set; }
 
         #region Helpers
 
         private void InitDepartments()
         {
-            Departments = new ObservableCollection<Department>();
-            Departments.Add(new Department { Name = "Human Resource" });
-            Departments.Add(new Department { Name = "Finance And Admin" });
-            Departments.Add(new Department { Name = "IT Department" });
-            Departments.Add(new Department { Name = "Sales And Marketing" });
+            Departments = new ObservableCollection<DepartmentModel>();
+            Departments.Add(new DepartmentModel { Name = "Human Resource" });
+            Departments.Add(new DepartmentModel { Name = "Finance And Admin" });
+            Departments.Add(new DepartmentModel { Name = "IT Department" });
+            Departments.Add(new DepartmentModel { Name = "Sales And Marketing" });
         }
 
         private void SetSelectedEmployeeDetails()
@@ -356,6 +359,8 @@ namespace WpfMvvm.ViewModels
                     });
 
                     ClearInputs();
+
+                   
                 }
                 else
                 {
@@ -394,6 +399,7 @@ namespace WpfMvvm.ViewModels
                 Employees.Add(emp);
             }
 
+           
 
         }
 

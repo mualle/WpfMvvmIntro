@@ -26,6 +26,12 @@ namespace WpfMvvm
 
             var vm = new ViewModels.EmployeeViewModel();
             vm.CloseAction = new Action(() => this.Close());
+
+            var GroupableEmployees = new ListCollectionView(vm.Employees);
+            GroupableEmployees.GroupDescriptions.Add(new PropertyGroupDescription("Department"));
+
+            dgvEmployees.ItemsSource = GroupableEmployees;
+
             this.DataContext = vm;
         }
     }

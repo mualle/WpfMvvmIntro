@@ -84,6 +84,8 @@ namespace WpfMvvm.ViewModels
             {
                 _gross = value;
                 OnpropertyChanged("Gross");
+
+                Payee = CalculatePAYE(value);
             }
         }
 
@@ -215,7 +217,9 @@ namespace WpfMvvm.ViewModels
 
         private void OpenHelp()
         {
-            
+            var currentLocation = Environment.CurrentDirectory;
+
+            System.Diagnostics.Process.Start(currentLocation + "/Demo_Help.pdf");
         }
 
         private void Close()
@@ -296,6 +300,53 @@ namespace WpfMvvm.ViewModels
             OnpropertyChanged("Employees");
         }
 
+        private decimal CalculatePAYE(decimal taxableAmount)
+        {
+            try
+            {
+                double minPercentage = 0.2; // 20%
+                double maxPercentage = 0.3; // 30%
+                decimal minAmount = decimal.Parse("2805");
+                decimal maxAmount = decimal.Parse("4747");
+
+                decimal GovRen = decimal.Parse(minPercentage.ToString()) * decimal.Parse(minAmount.ToString());
+                GovRen = decimal.Round(GovRen, 2);
+
+                decimal PAYE = 0;
+
+                if (taxableAmount <= minAmount)
+                {
+                    PAYE = 0;
+                }
+                else if (minAmount < taxableAmount && taxableAmount <= maxAmount)
+                {
+                    PAYE = taxableAmount * decimal.Parse(minPercentage.ToString());
+                    PAYE = decimal.Round(PAYE, 2) - GovRen;
+                }
+                else
+                {
+                    decimal Rem = taxableAmount - decimal.Parse(maxAmount.ToString());
+                    Rem = decimal.Round(Rem, 2);
+
+                    decimal LowerRate = decimal.Parse(maxAmount.ToString()) * decimal.Parse(minPercentage.ToString());
+                    decimal UpperRate = decimal.Parse(maxPercentage.ToString()) * Rem;
+
+                    LowerRate = decimal.Round(LowerRate, 2);
+                    UpperRate = decimal.Round(UpperRate, 2);
+
+                    PAYE = (LowerRate + UpperRate) - GovRen;
+                }
+                return PAYE;
+            }
+            catch
+            {
+
+                return 0;
+            }
+
+
+
+        }
 
         #endregion
 

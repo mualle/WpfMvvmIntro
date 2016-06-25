@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WpfMvvm.Models
 {
-    public class Employee
+    public class Employee 
     {
         public Employee()
         {
@@ -22,6 +23,8 @@ namespace WpfMvvm.Models
         public decimal Payee { get; set; }
         public decimal Net { get { return Gross - Payee; } }
         public bool HasPensionFund { get; set; }
+
+
 
     }
 }

@@ -1,7 +1,7 @@
 # WpfMvvmIntro
 Introduction to Wpf (Windows Presentation Foundation) with Mvvm (Model View View-Model) Pattern
 
-[Presentation Slides](https://drive.google.com/file/d/0B48YCRX_Ir9Aa2ZjMGZ3dUoyUVU/view?usp=sharing)
+[Download Presentation Slides](https://drive.google.com/file/d/0B48YCRX_Ir9Aa2ZjMGZ3dUoyUVU/view?usp=sharing)
 
 ### Prerequisites 
 * Visual Studio 2013 or later
